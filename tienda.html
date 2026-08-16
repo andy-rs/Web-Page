@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tienda · Terral</title>
+<meta name="description" content="Tabletas de origen, bombonería, untables, nibs, café y cajas de regalo. Chocolate peruano de ocho regiones, con despacho el mismo día en Lima.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231E1815'/%3E%3Cpath d='M20 9c6.5 4.6 6.5 17.4 0 22-6.5-4.6-6.5-17.4 0-22Z' fill='none' stroke='%238C4A2F' stroke-width='1.4'/%3E%3Cline x1='20' y1='10' x2='20' y2='30' stroke='%238C4A2F' stroke-width='1.2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="tienda">
+
+<section class="phead">
+  <div class="phead__glow"></div>
+  <div class="wrap rv">
+    <p class="eyebrow">Catálogo</p>
+    <h1>La tienda</h1>
+    <p class="lead">Todo lo que trajimos este mes. Los precios son finales, incluyen IGV y el envío se calcula al cerrar el pedido.</p>
+  </div>
+</section>
+
+<div class="filters">
+  <div class="wrap filters__row">
+    <div class="chips" id="jsChips"></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <span class="result-count" id="jsCount"></span>
+      <select class="select" id="jsOrigin" aria-label="Filtrar por origen"></select>
+      <select class="select" id="jsSort" aria-label="Ordenar">
+        <option value="destacados">Orden de la casa</option>
+        <option value="precio-asc">Precio: menor a mayor</option>
+        <option value="precio-desc">Precio: mayor a menor</option>
+        <option value="intensidad">Más intenso primero</option>
+        <option value="nombre">Nombre A–Z</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <div class="grid-prod" id="jsGrid"></div>
+  </div>
+</section>
+
+<section class="section section--tight section--dark">
+  <div class="wrap cols-3">
+    <div class="pillar rv"><span class="pillar__n">Envío</span><h3>Gratis desde S/ 120</h3><p>Dentro de Lima Metropolitana. Debajo de ese monto, S/ 12. A provincias cotizamos al cerrar.</p></div>
+    <div class="pillar rv" data-d="1"><span class="pillar__n">Pago</span><h3>Como le quede mejor</h3><p>Tarjeta, transferencia, Yape, Plin o efectivo contra entrega en Lima.</p></div>
+    <div class="pillar rv" data-d="2"><span class="pillar__n">Cambios</span><h3>Siete días</h3><p>Si algo llegó mal o no era lo que esperaba, lo cambiamos o devolvemos el dinero. Sin discusión.</p></div>
+  </div>
+</section>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/art.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,713 +1,207 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-PE">
 <head>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atom - Estudia con estrategia, ingresa con ventaja</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #1a237e;
-            --secondary-color: #3f51b5;
-            --accent-color: #00acc1;
-            --text-dark: #212121;
-            --text-light: #757575;
-            --background-light: #f5f5f5;
-            --white: #ffffff;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* Navegación */
-        nav {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Menú móvil */
-        .mobile-menu {
-            display: none;
-            cursor: pointer;
-            flex-direction: column;
-            z-index: 1001;
-        }
-
-        .mobile-menu span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--primary-color);
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
-        /* Animación del menú hamburguesa */
-        .mobile-menu.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .mobile-menu.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            margin-top: 70px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background-color: var(--accent-color);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Contenido Principal */
-        .main-content {
-            padding: 5rem 2rem;
-            background-color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .main-content::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(63, 81, 181, 0.05) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        
-        .content-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .content-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .content-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .accent-line {
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
-            margin: 0 auto;
-            border-radius: 2px;
-        }
-        
-        .content-text-section {
-            max-width: 900px;
-            margin: 0 auto 4rem;
-            text-align: center;
-        }
-        
-        .content-text {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-        }
-        
-        /* Philosophy Section */
-        .philosophy-section {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-            margin-top: 4rem;
-            padding-top: 3rem;
-            border-top: 1px solid rgba(0,0,0,0.08);
-        }
-        
-        .philosophy-card {
-            text-align: center;
-            padding: 2rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .philosophy-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .philosophy-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, rgba(0, 172, 193, 0.1), rgba(63, 81, 181, 0.1));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-        }
-        
-        .philosophy-card h3 {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .philosophy-card p {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-        
-        /* Sección de Beneficios */
-        .benefits {
-            background-color: var(--background-light);
-            padding: 4rem 2rem;
-        }
-        
-        .benefits-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .benefits h2 {
-            text-align: center;
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-bottom: 3rem;
-            font-weight: 600;
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .benefit-card {
-            background-color: var(--white);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .benefit-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-            border-color: var(--accent-color);
-        }
-        
-        .benefit-icon {
-            flex-shrink: 0;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-        }
-        
-        .benefit-icon svg {
-            width: 24px;
-            height: 24px;
-        }
-        
-        .benefit-content h3 {
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .benefit-content p {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* CTA Final */
-        .cta-section {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: var(--white);
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--text-dark);
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        /* Animaciones */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive para móvil */
-        @media (max-width: 768px) {
-            .mobile-menu {
-                display: flex;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background-color: var(--white);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                padding: 2rem 0;
-                box-shadow: var(--shadow);
-                transition: left 0.3s ease;
-                z-index: 999;
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links li {
-                margin: 1rem 0;
-                width: 80%;
-            }
-            
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 1rem;
-                display: block;
-                width: 100%;
-                text-align: center;
-                border-radius: 8px;
-                transition: all 0.3s ease;
-            }
-            
-            .nav-links a:hover {
-                background-color: var(--background-light);
-                color: var(--primary-color);
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .content-header h2 {
-                font-size: 1.8rem;
-            }
-            
-            .philosophy-section {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .philosophy-card {
-                padding: 1.5rem;
-            }
-            
-            .content-text-section {
-                text-align: left;
-            }
-
-            .benefits-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .benefit-card {
-                padding: 1.25rem;
-            }
-            
-            .benefit-icon {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .benefit-content h3 {
-                font-size: 1rem;
-            }
-
-            .cta-section h2 {
-                font-size: 1.8rem;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terral · Cacao peruano de origen en Lima</title>
+<meta name="description" content="Terral reúne en Lima el chocolate de ocho regiones del Perú: Chachapoyas, Condorcanqui, Cusco, Junín, San Martín, Piura, Cajamarca y Ucayali. Compra directa a productores. Despacho el mismo día.">
+<meta property="og:title" content="Terral · Cacao peruano de origen">
+<meta property="og:description" content="Chocolate de ocho regiones del Perú, reunido en Lima.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231E1815'/%3E%3Cpath d='M20 9c6.5 4.6 6.5 17.4 0 22-6.5-4.6-6.5-17.4 0-22Z' fill='none' stroke='%238C4A2F' stroke-width='1.4'/%3E%3Cline x1='20' y1='10' x2='20' y2='30' stroke='%238C4A2F' stroke-width='1.2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-    <!-- Navegación -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">Atom</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#">Inicio</a></li>
-                <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
-                <li><a href="atom-universitarios.html">Atom para universitarios</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <div class="mobile-menu" id="mobileMenu" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<body data-page="inicio">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Estudia con estrategia, ingresa con ventaja</h1>
-            <p class="subtitle">La diferencia entre ingresar o no está en cómo estudias, no en cuánto.</p>
-            <a href="contacto.html" class="btn">Comienza ahora</a>
-        </div>
-    </section>
+<!-- ============================ HERO ============================ -->
+<section class="hero">
+  <div class="hero__glow"></div>
+  <div class="wrap hero__grid">
+    <div class="hero__copy rv">
+      <p class="eyebrow">Ocho regiones, una mesa</p>
+      <h1>El país entero cabe<br>en una <em>tableta</em>.</h1>
+      <p>Compramos chocolate directamente a productores de Chachapoyas, Condorcanqui, Quillabamba, Satipo, Juanjuí, Jaén, Curimaná y Sullana. Lo catamos, lo elegimos y lo traemos a Lima. Nada más.</p>
+      <div class="hero__cta">
+        <a class="btn btn--light" href="tienda.html">Ver el catálogo</a>
+        <a class="btn btn--on-dark-ghost" href="origenes.html">Conocer los orígenes</a>
+      </div>
+      <dl class="hero__meta">
+        <div><dt>Orígenes</dt><dd>8</dd></div>
+        <div><dt>Familias productoras</dt><dd>665</dd></div>
+        <div><dt>Intermediarios</dt><dd>0</dd></div>
+      </dl>
+    </div>
+    <div class="hero__art rv" data-d="2" aria-hidden="true">
+      <svg viewBox="0 0 460 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hb" x1="0" y1="0" x2=".7" y2="1">
+            <stop offset="0" stop-color="#EFE4CC"/><stop offset="1" stop-color="#C9B996"/>
+          </linearGradient>
+          <linearGradient id="hs" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#000" stop-opacity=".16"/>
+            <stop offset=".45" stop-color="#fff" stop-opacity=".2"/>
+            <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+          </linearGradient>
+          <filter id="hd" x="-40%" y="-25%" width="180%" height="160%">
+            <feDropShadow dx="0" dy="24" stdDeviation="26" flood-color="#000" flood-opacity=".45"/>
+          </filter>
+        </defs>
 
-    <!-- Contenido Principal -->
-    <section class="main-content">
-        <div class="content-container">
-            <div class="content-header">
-                <h2>Domina el arte de estudiar con ciencia</h2>
-                <div class="accent-line"></div>
-            </div>
-            
-            <div class="content-text-section">
-                <p class="content-text">
-                    En Atom te enseñamos a dominar el estudio como una ciencia. Aquí aprenderás a 
-                    organizar tu tiempo, mantener la concentración, gestionar tu energía y aplicar técnicas de 
-                    estudio comprobadas para rendir al máximo. Nuestro enfoque está diseñado para quienes 
-                    aspiran a ingresar a universidades exigentes, y saben que el camino no es solo estudiar 
-                    más, sino estudiar con estrategia, intención y disciplina.
-                </p>
-            </div>
-            
-            <div class="philosophy-section">
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        </svg>
-                    </div>
-                    <h3>Metodología comprobada</h3>
-                    <p>Técnicas respaldadas por la neurociencia y la psicología del aprendizaje</p>
-                </div>
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                        </svg>
-                    </div>
-                    <h3>Enfoque personalizado</h3>
-                    <p>Adaptamos las estrategias a tu estilo de aprendizaje y objetivos específicos</p>
-                </div>
-                <div class="philosophy-card">
-                    <div class="philosophy-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="2" x2="12" y2="20"></line>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="15.83" y2="8.17"></line>
-                            <line x1="14.83" y1="16.17" x2="19.66" y2="21"></line>
-                            <line x1="8.17" y1="15.83" x2="2.66" y2="21.34"></line>
-                            <line x1="12" y1="12" x2="16.24" y2="7.76"></line>
-                        </svg>
-                    </div>
-                    <h3>Resultados medibles</h3>
-                    <p>Seguimiento continuo de tu progreso con métricas claras y objetivas</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- tableta posterior -->
+        <g opacity=".5" transform="translate(-46 44) rotate(-7 230 260)" filter="url(#hd)">
+          <rect x="146" y="60" width="180" height="360" rx="5" fill="#B9A87F"/>
+          <rect x="146" y="212" width="180" height="74" fill="#5E6650"/>
+        </g>
+        <!-- tableta frontal -->
+        <g transform="rotate(4 230 260)" filter="url(#hd)">
+          <rect x="146" y="60" width="180" height="360" rx="5" fill="url(#hb)"/>
+          <rect x="146" y="60" width="180" height="360" rx="5" fill="url(#hs)"/>
+          <rect x="146" y="212" width="180" height="80" fill="#8C4A2F"/>
+          <text x="236" y="252" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="30" letter-spacing="8" fill="#FFF8EC">TERRAL</text>
+          <text x="236" y="274" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="9" letter-spacing="4" fill="rgba(255,248,236,.85)">CHACHAPOYAS · 70%</text>
+          <line x1="168" y1="92" x2="304" y2="92" stroke="#2A211B" stroke-opacity=".2"/>
+          <line x1="168" y1="392" x2="304" y2="392" stroke="#2A211B" stroke-opacity=".2"/>
+          <text x="168" y="84" font-family="Inter, Arial, sans-serif" font-size="8.5" letter-spacing="3.4" fill="#2A211B" fill-opacity=".55">AMAZONAS</text>
+          <text x="304" y="84" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="8.5" letter-spacing="3.4" fill="#2A211B" fill-opacity=".55">70%</text>
+          <text x="168" y="410" font-family="Inter, Arial, sans-serif" font-size="8" letter-spacing="3" fill="#2A211B" fill-opacity=".5">70 g</text>
+          <text x="304" y="410" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="8" letter-spacing="3" fill="#2A211B" fill-opacity=".5">PERÚ</text>
+        </g>
+        <!-- granos sueltos -->
+        <g fill="#7A5A34" opacity=".85">
+          <ellipse cx="86" cy="452" rx="21" ry="14" transform="rotate(-18 86 452)"/>
+          <ellipse cx="128" cy="474" rx="19" ry="12" transform="rotate(12 128 474)"/>
+          <ellipse cx="368" cy="446" rx="20" ry="13" transform="rotate(24 368 446)"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
 
-    <!-- Beneficios -->
-    <section class="benefits">
-        <div class="benefits-container">
-            <h2>Al terminar una sesión, serás capaz de</h2>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11l3 3L22 4"></path>
-                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                        </svg>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Planificación estratégica</h3>
-                        <p>Planificar tu estudio diaria y semanalmente con enfoque en resultados.</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Técnicas avanzadas</h3>
-                        <p>Utilizar herramientas como Spaced Repetition, Pomodoro y autoevaluaciones inteligentes.</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
-                        </svg>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Control emocional</h3>
-                        <p>Gestionar el estrés de manera efectiva.</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14"></path>
-                            <path d="M12 5l7 7-7 7"></path>
-                        </svg>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Enfoque sostenido</h3>
-                        <p>Mantener el enfoque y estudiar con energía sostenida.</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Autoevaluación</h3>
-                        <p>Identificar tus puntos débiles con precisión.</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Transformación completa</h3>
-                        <p>Convertirte en alguien que estudia mejor, no más, avanzando con claridad hacia tu objetivo.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ============================ MARQUESINA ============================ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Chachapoyas</span><span>Condorcanqui</span><span>Quillabamba</span><span>Satipo</span><span>Juanjuí</span><span>Jaén</span><span>Curimaná</span><span>Sullana</span><span>Chachapoyas</span><span>Condorcanqui</span><span>Quillabamba</span><span>Satipo</span><span>Juanjuí</span><span>Jaén</span><span>Curimaná</span><span>Sullana</span>
+  </div>
+</div>
 
-    <!-- CTA Final -->
-    <section class="cta-section">
-        <h2>Tú decides: ¿meses perdidos o resultados concretos?</h2>
-        <p>Avanza hoy hacia tu ingreso universitario.</p>
-        <a href="contacto.html" class="btn">Únete ahora</a>
-    </section>
+<!-- ============================ QUÉ HACEMOS ============================ -->
+<section class="section">
+  <div class="wrap split split--top">
+    <div class="rv">
+      <p class="eyebrow">Qué hacemos exactamente</p>
+      <h2>No fabricamos<br>chocolate. Lo elegimos.</h2>
+    </div>
+    <div class="rv" data-d="1">
+      <p class="lead">Terral es una tienda de Barranco que compra chocolate ya hecho a talleres y asociaciones de productores en ocho regiones del país, y lo pone al alcance de quien vive en Lima.</p>
+      <p class="lead" style="margin-top:18px">Cada lote pasa por una cata a ciegas antes de entrar. Si no llega a la mesa, no llega a la tienda. Y cada empaque lleva impreso el nombre de quien lo hizo, porque el mérito es suyo.</p>
+      <a class="link-u" href="nosotros.html" style="margin-top:28px">Cómo trabajamos →</a>
+    </div>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Atom. Todos los derechos reservados.</p>
-    </footer>
+  <div class="wrap cols-4" style="margin-top:clamp(48px,6vw,84px)">
+    <div class="pillar rv"><span class="pillar__n">01</span><h3>Cata a ciegas</h3><p>Cada lote se prueba sin etiqueta, con tres personas y una ficha. Rechazamos alrededor de un tercio de lo que nos ofrecen.</p></div>
+    <div class="pillar rv" data-d="1"><span class="pillar__n">02</span><h3>Precio pagado en origen</h3><p>Pagamos al recoger, en el sitio y por encima del precio de bolsa. Publicamos el precio de compra de cada lote en la ficha del producto.</p></div>
+    <div class="pillar rv" data-d="2"><span class="pillar__n">03</span><h3>Cadena de frío</h3><p>De diciembre a marzo despachamos en caja térmica con gel refrigerante, sin cargo dentro de Lima.</p></div>
+    <div class="pillar rv" data-d="3"><span class="pillar__n">04</span><h3>Nombre propio</h3><p>El productor aparece en la etiqueta y en la web. No hay marca blanca ni «origen Perú» a secas.</p></div>
+  </div>
+</section>
 
-    <script>
-        // Función simple para el menú móvil
-        function toggleMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const navLinks = document.getElementById('navLinks');
-            
-            mobileMenu.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        }
+<!-- ============================ DESTACADOS ============================ -->
+<section class="section section--bone">
+  <div class="wrap">
+    <div class="split" style="align-items:end;margin-bottom:clamp(32px,4vw,54px)">
+      <div class="rv">
+        <p class="eyebrow">Selección de la casa</p>
+        <h2>Por donde empezar</h2>
+      </div>
+      <div class="rv" data-d="1" style="justify-self:end">
+        <a class="link-u" href="tienda.html">Ver los 25 productos →</a>
+      </div>
+    </div>
+    <div class="grid-prod" data-feature="tab-chachapoyas-70, tab-quillabamba-72, caja-origenes-5, tab-piura-blanco-55"></div>
+  </div>
+</section>
 
-        // Cerrar menú al hacer click en los enlaces
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobileMenu');
-                const navLinks = document.getElementById('navLinks');
-                
-                mobileMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
+<!-- ============================ ORÍGENES ============================ -->
+<section class="section section--dark">
+  <div class="wrap">
+    <div class="rv" style="max-width:60ch;margin-bottom:clamp(36px,5vw,60px)">
+      <p class="eyebrow">El mapa</p>
+      <h2>Ocho lugares donde alguien<br>está haciendo esto bien</h2>
+      <p class="lead" style="margin-top:20px">Del bosque nublado del Utcubamba a las salineras de Maras, pasando por la llanura de Ucayali. Cada origen tiene su gente, su altura y su temporada.</p>
+    </div>
 
-        // Cerrar menú al hacer click fuera del menú
-        document.addEventListener('click', function(e) {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const navLinks = document.getElementById('navLinks');
-            const navContainer = document.querySelector('.nav-container');
-            
-            if (!navContainer.contains(e.target)) {
-                mobileMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
+    <div class="origins">
+      <div class="rv">
+        <div class="origin-list" id="jsOriginList"></div>
+      </div>
+      <div class="rv" data-d="1">
+        <div class="map-stage" id="jsMap"></div>
+        <div class="map-card" id="jsOriginCard"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Smooth scrolling para los enlaces
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+<!-- ============================ CAJAS DE REGALO ============================ -->
+<section class="section">
+  <div class="wrap split">
+    <div class="rv">
+      <p class="eyebrow">Para regalar</p>
+      <h2>Una cata completa,<br>en una caja</h2>
+      <p class="lead" style="margin-top:20px">La Caja Cinco Orígenes trae cinco tabletas de cinco regiones distintas y una lámina que explica qué buscar en cada una. Es el regalo que termina con toda la mesa discutiendo cuál está mejor.</p>
+      <p class="lead" style="margin-top:16px">Para empresas armamos desde 20 unidades, con tarjeta impresa y despacho a varias direcciones en Lima.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px">
+        <a class="btn" href="tienda.html?cat=cajas">Ver cajas</a>
+        <a class="btn btn--ghost" href="mayoristas.html">Regalos corporativos</a>
+      </div>
+    </div>
+    <div class="rv" data-d="1">
+      <div class="grid-prod" data-feature="caja-cata-3, bomb-caja-9" style="grid-template-columns:repeat(2,1fr)"></div>
+    </div>
+  </div>
+</section>
 
-        // Animación de aparición al hacer scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+<!-- ============================ TESTIMONIOS ============================ -->
+<section class="section section--bone">
+  <div class="wrap">
+    <div class="center rv" style="margin-bottom:clamp(32px,4vw,52px)">
+      <p class="eyebrow">Quienes ya compraron</p>
+      <h2>4,9 sobre 5 en 214 pedidos</h2>
+    </div>
+    <div class="quotes" id="jsQuotes"></div>
+  </div>
+</section>
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+<!-- ============================ ENVÍOS ============================ -->
+<section class="section section--tight section--dark">
+  <div class="wrap cols-4">
+    <div class="pillar rv"><span class="pillar__n">Lima</span><h3>Mismo día</h3><p>Pedidos antes de la 1:00 p. m. salen ese mismo día. S/ 12, o gratis desde S/ 120.</p></div>
+    <div class="pillar rv" data-d="1"><span class="pillar__n">Provincias</span><h3>2 a 5 días</h3><p>Olva y Shalom a todo el país. Le pasamos el número de guía apenas sale.</p></div>
+    <div class="pillar rv" data-d="2"><span class="pillar__n">Verano</span><h3>Caja térmica</h3><p>De diciembre a marzo, gel refrigerante y caja aislante sin costo dentro de Lima.</p></div>
+    <div class="pillar rv" data-d="3"><span class="pillar__n">Tienda</span><h3>Barranco</h3><p>Jr. Domeyer 285. Martes a domingo de 11:00 a 20:00. Se puede catar antes de comprar.</p></div>
+  </div>
+</section>
 
-        // Observar elementos
-        document.querySelectorAll('.benefit-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
+<!-- ============================ NEWSLETTER ============================ -->
+<section class="section">
+  <div class="wrap wrap--narrow center rv">
+    <p class="eyebrow">Cosecha por cosecha</p>
+    <h2>Le avisamos cuando<br>entra un lote nuevo</h2>
+    <p class="lead" style="margin-top:18px">Un correo cada tres o cuatro semanas: qué llegó, de dónde y cuánto queda. Los micro lotes se agotan en días y quienes están en la lista se enteran primero.</p>
+    <form class="form" data-demo style="margin-top:32px;grid-template-columns:1fr auto;display:grid;gap:12px;text-align:left">
+      <div class="field"><label for="nl">Correo electrónico</label><input id="nl" type="email" required placeholder="usted@correo.com"></div>
+      <button class="btn" type="submit" style="align-self:end">Suscribirme</button>
+    </form>
+    <p class="form__note" style="margin-top:14px">Sin spam. Puede darse de baja con un clic.</p>
+  </div>
+</section>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/art.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>

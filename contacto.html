@@ -1,568 +1,94 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-PE">
 <head>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - Atom</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #1a237e;
-            --secondary-color: #3f51b5;
-            --accent-color: #00acc1;
-            --text-dark: #212121;
-            --text-light: #757575;
-            --background-light: #f5f5f5;
-            --white: #ffffff;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --whatsapp-color: #25D366;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* Navegación */
-        nav {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover, 
-        .nav-links a.active {
-            color: var(--accent-color);
-        }
-
-        /* Menú móvil */
-        .mobile-menu {
-            display: none;
-            cursor: pointer;
-            flex-direction: column;
-            z-index: 1001;
-        }
-
-        .mobile-menu span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--primary-color);
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
-        /* Animación del menú hamburguesa */
-        .mobile-menu.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .mobile-menu.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: var(--white);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            margin-top: 70px;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero .subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        /* Main Content */
-        .contact-section {
-            padding: 5rem 2rem;
-            background-color: var(--white);
-        }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .contact-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-
-        .contact-intro p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .contact-card {
-            background-color: var(--white);
-            border-radius: 16px;
-            padding: 2.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent-color), var(--secondary-color));
-        }
-
-        .contact-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-        }
-
-        .contact-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, rgba(0, 172, 193, 0.1), rgba(63, 81, 181, 0.1));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover .contact-icon {
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            color: var(--white);
-            transform: scale(1.1);
-        }
-
-        .contact-card h3 {
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .contact-card p {
-            font-size: 1rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-info {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .whatsapp-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, var(--whatsapp-color), #1ebe5a);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-
-        .whatsapp-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-            background: linear-gradient(135deg, #1ebe5a, var(--whatsapp-color));
-        }
-
-        .email-link {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .email-link:hover {
-            border-bottom-color: var(--accent-color);
-        }
-
-        /* Location & Schedule Cards */
-        .location-card {
-            background: linear-gradient(135deg, rgba(63, 81, 181, 0.02), rgba(0, 172, 193, 0.02));
-        }
-
-        .schedule-card {
-            background: linear-gradient(135deg, rgba(0, 172, 193, 0.02), rgba(63, 81, 181, 0.02));
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--text-dark);
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-        }
-
-        /* Animaciones */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .mobile-menu {
-                display: flex;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background-color: var(--white);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                padding: 2rem 0;
-                box-shadow: var(--shadow);
-                transition: left 0.3s ease;
-                z-index: 999;
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links li {
-                margin: 1rem 0;
-                width: 80%;
-            }
-            
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 1rem;
-                display: block;
-                width: 100%;
-                text-align: center;
-                border-radius: 8px;
-                transition: all 0.3s ease;
-            }
-            
-            .nav-links a:hover {
-                background-color: var(--background-light);
-                color: var(--primary-color);
-            }
-
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-
-            .hero .subtitle {
-                font-size: 1.1rem;
-            }
-
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .contact-card {
-                padding: 2rem;
-            }
-
-            .contact-icon {
-                width: 60px;
-                height: 60px;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacto · Terral</title>
+<meta name="description" content="Tienda en Jr. Domeyer 285, Barranco, Lima. Martes a domingo de 11:00 a 20:00. WhatsApp, correo y formulario de contacto.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231E1815'/%3E%3Cpath d='M20 9c6.5 4.6 6.5 17.4 0 22-6.5-4.6-6.5-17.4 0-22Z' fill='none' stroke='%238C4A2F' stroke-width='1.4'/%3E%3Cline x1='20' y1='10' x2='20' y2='30' stroke='%238C4A2F' stroke-width='1.2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-    <!-- Navegación -->
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="logo">Atom</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
-                <li><a href="atom-universitarios.html">Atom para universitarios</a></li>
-                <li><a href="contacto.html" class="active">Contacto</a></li>
-            </ul>
-            <div class="mobile-menu" id="mobileMenu" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+<body data-page="contacto">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Contacto</h1>
-            <p class="subtitle">¿Tienes preguntas? ¿Quieres saber si Atom es para ti?</p>
-        </div>
-    </section>
+<section class="phead">
+  <div class="phead__glow"></div>
+  <div class="wrap rv">
+    <p class="eyebrow">Contacto</p>
+    <h1>Estamos<br>en Barranco</h1>
+    <p class="lead">Y también al otro lado del WhatsApp casi todo el día. Escríbanos por donde le quede más cómodo.</p>
+  </div>
+</section>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="contact-container">
-            <div class="contact-intro">
-                <p>
-                    Estamos aquí para ayudarte a tomar la mejor decisión. Ya sea que tengas dudas sobre el programa, 
-                    el contenido, la metodología o quieras hablar directamente con el equipo, puedes escribirnos 
-                    y te responderemos lo más pronto posible.
-                </p>
-            </div>
+<section class="section">
+  <div class="wrap split split--top">
+    <div class="rv">
+      <div style="border-top:1px solid var(--line);padding-top:24px;margin-bottom:26px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Tienda</p>
+        <h3>Jr. Domeyer 285, Barranco</h3>
+        <p class="muted" style="margin-top:8px">A dos cuadras del Puente de los Suspiros. Martes a domingo de 11:00 a 20:00. Lunes cerrado.</p>
+        <a class="link-u" href="https://maps.google.com/?q=Jr.+Domeyer+285+Barranco+Lima" target="_blank" rel="noopener" style="margin-top:18px">Abrir en Google Maps →</a>
+      </div>
 
-            <div class="contact-grid">
-                <!-- Email Card -->
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Escríbenos por correo</h3>
-                    <p>Envíanos tus preguntas o dudas y te responderemos lo más pronto posible.</p>
-                    <div class="contact-info">
-                        <a href="mailto:atom.academy.contact@gmail.com" class="email-link">
-                            atom.academy.contact@gmail.com
-                        </a>
-                    </div>
-                </div>
+      <div style="border-top:1px solid var(--line);padding-top:24px;margin-bottom:26px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Pedidos y consultas</p>
+        <h3 style="font-size:1.5rem"><a href="https://wa.me/51900000000">WhatsApp +51 900 000 000</a></h3>
+        <p class="muted" style="margin-top:6px">Lunes a sábado, 9:00 a 20:00. Respondemos en menos de una hora en horario de atención.</p>
+      </div>
 
-                <!-- WhatsApp Card -->
-                <div class="contact-card fade-in">
-                    <div class="contact-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                        </svg>
-                    </div>
-                    <h3>Envíanos un mensaje por WhatsApp</h3>
-                    <p>Chatea directamente con nosotros para resolver tus dudas de manera rápida y personalizada.</p>
-                    <a href="https://wa.me/51972726149?text=Hola,%20me%20interesa%20conocer%20más%20sobre%20Atom" 
-                       target="_blank" 
-                       class="whatsapp-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                        </svg>
-                        Hablar por WhatsApp
-                    </a>
-                </div>
+      <div style="border-top:1px solid var(--line);padding-top:24px;margin-bottom:26px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Correo</p>
+        <h3 style="font-size:1.5rem"><a href="mailto:hola@terral.pe">hola@terral.pe</a></h3>
+        <p class="muted" style="margin-top:6px">Mayoristas y empresas: <a href="mailto:mayoristas@terral.pe" style="border-bottom:1px solid var(--line)">mayoristas@terral.pe</a></p>
+      </div>
 
-                <!-- Location Card -->
-                <div class="contact-card location-card fade-in">
-                    <div class="contact-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                    </div>
-                    <h3>Ubicación</h3>
-                    <p>Atom opera 100% online, pero si estás en Lima y deseas clases presenciales privadas, ¡consúltanos!</p>
-                    <div class="contact-info">
-                        Modalidad virtual y presencial en Lima
-                    </div>
-                </div>
+      <div style="border-top:1px solid var(--line);padding-top:24px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Datos de la empresa</p>
+        <p class="muted" style="font-size:.9rem">Terral Cacao S.A.C.<br>RUC 20613456789<br>Jr. Domeyer 285, Barranco, Lima, Perú</p>
+        <a class="link-u" href="legal.html#reclamaciones" style="margin-top:18px">Libro de reclamaciones →</a>
+      </div>
+    </div>
 
-                <!-- Schedule Card -->
-                <div class="contact-card schedule-card fade-in">
-                    <div class="contact-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12,6 12,12 16,14"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Horario de atención</h3>
-                    <p>Estamos disponibles para atenderte y resolver todas tus consultas.</p>
-                    <div class="contact-info">
-                        Lunes a sábado: 9:00 a.m. – 6:00 p.m.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <form class="form rv" data-d="1" data-demo>
+      <div class="field--2">
+        <div class="field"><label for="c-nom">Nombre y apellido</label><input id="c-nom" required></div>
+        <div class="field"><label for="c-tel">Teléfono / WhatsApp</label><input id="c-tel" type="tel"></div>
+      </div>
+      <div class="field"><label for="c-mail">Correo</label><input id="c-mail" type="email" required></div>
+      <div class="field">
+        <label for="c-tema">Motivo</label>
+        <select id="c-tema" class="select" style="width:100%;border-radius:2px;padding:14px 34px 14px 16px;background-color:var(--paper)">
+          <option>Consulta sobre un producto</option>
+          <option>Estado de mi pedido</option>
+          <option>Cambio o devolución</option>
+          <option>Mayoristas y empresas</option>
+          <option>Prensa o colaboraciones</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field"><label for="c-msj">Mensaje</label><textarea id="c-msj" required></textarea></div>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:.8rem;color:var(--text-mid)">
+        <input type="checkbox" required style="width:auto;margin-top:4px">
+        <span>Acepto la <a href="legal.html#privacidad" style="border-bottom:1px solid var(--line)">política de privacidad</a>.</span>
+      </label>
+      <button class="btn" type="submit">Enviar mensaje</button>
+      <p class="form__note">Este formulario es una demostración: no envía datos a ningún servidor.</p>
+    </form>
+  </div>
+</section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Atom. Todos los derechos reservados.</p>
-    </footer>
+<section class="section section--tight section--dark">
+  <div class="wrap cols-3">
+    <div class="pillar rv"><span class="pillar__n">Cata en tienda</span><h3>Gratis, sin reserva</h3><p>Siempre hay tres tabletas abiertas sobre el mostrador. Puede probar antes de decidir.</p></div>
+    <div class="pillar rv" data-d="1"><span class="pillar__n">Cata guiada</span><h3>Jueves, 19:00</h3><p>Una hora, seis chocolates y café. Aforo de diez personas. S/ 60, descontables de su compra.</p></div>
+    <div class="pillar rv" data-d="2"><span class="pillar__n">Recojo en tienda</span><h3>Sin costo</h3><p>Compre en línea y recójalo el mismo día en Barranco. Elija la opción al cerrar el pedido.</p></div>
+  </div>
+</section>
 
-    <script>
-        // Función simple para el menú móvil
-        function toggleMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const navLinks = document.getElementById('navLinks');
-            
-            mobileMenu.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        }
-
-        // Cerrar menú al hacer click en los enlaces
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobileMenu');
-                const navLinks = document.getElementById('navLinks');
-                
-                mobileMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Cerrar menú al hacer click fuera del menú
-        document.addEventListener('click', function(e) {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const navLinks = document.getElementById('navLinks');
-            const navContainer = document.querySelector('.nav-container');
-            
-            if (!navContainer.contains(e.target)) {
-                mobileMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-
-        // Smooth scrolling para los enlaces
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Animación de aparición al hacer scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observar elementos
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Efecto hover mejorado para las tarjetas
-        document.querySelectorAll('.contact-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-    </script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/art.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>
