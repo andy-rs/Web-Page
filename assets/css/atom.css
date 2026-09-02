@@ -1005,7 +1005,7 @@ body.menu-open { overflow: hidden; }
 /* --------------------------------------------------------------------------
    17. PROGRAMAS / PRECIOS
    -------------------------------------------------------------------------- */
-.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; align-items: stretch; }
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.3rem; align-items: start; }
 .plan {
   position: relative; display: flex; flex-direction: column; gap: 1.2rem;
   padding: clamp(1.6rem, 1.3rem + 1vw, 2.2rem);
@@ -1034,7 +1034,8 @@ body.menu-open { overflow: hidden; }
 .plan--featured .plan__price small { color: rgba(226,233,250,.6); }
 .plan__divider { height: 1px; background: var(--line); }
 .plan--featured .plan__divider { background: rgba(255,255,255,.14); }
-.plan .checklist { flex: 1; }
+.plan .checklist { flex: 1; align-content: start; gap: .72rem; }
+.plan > .btn { margin-top: auto; }
 .plan .checklist li { font-size: .93rem; }
 @media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
 
