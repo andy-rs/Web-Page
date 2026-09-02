@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contacto · Terral</title>
+<meta name="description" content="Tienda en Jr. Domeyer 285, Barranco, Lima. Martes a domingo de 11:00 a 20:00. WhatsApp, correo y formulario de contacto.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%231E1815'/%3E%3Cpath d='M20 9c6.5 4.6 6.5 17.4 0 22-6.5-4.6-6.5-17.4 0-22Z' fill='none' stroke='%238C4A2F' stroke-width='1.4'/%3E%3Cline x1='20' y1='10' x2='20' y2='30' stroke='%238C4A2F' stroke-width='1.2'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="contacto">
+
+<section class="phead">
+  <div class="phead__glow"></div>
+  <div class="wrap rv">
+    <p class="eyebrow">Contacto</p>
+    <h1>Estamos<br>en Barranco</h1>
+    <p class="lead">Y también al otro lado del WhatsApp casi todo el día. Escríbanos por donde le quede más cómodo.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap split split--top">
+    <div class="rv">
+      <div style="border-top:1px solid var(--line);padding-top:24px;margin-bottom:26px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Tienda</p>
+        <h3>Jr. Domeyer 285, Barranco</h3>
+        <p class="muted" style="margin-top:8px">A dos cuadras del Puente de los Suspiros. Martes a domingo de 11:00 a 20:00. Lunes cerrado.</p>
+        <a class="link-u" href="https://maps.google.com/?q=Jr.+Domeyer+285+Barranco+Lima" target="_blank" rel="noopener" style="margin-top:18px">Abrir en Google Maps →</a>
+      </div>
+
+      <div style="border-top:1px solid var(--line);padding-top:24px;margin-bottom:26px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Pedidos y consultas</p>
+        <h3 style="font-size:1.5rem"><a href="https://wa.me/51900000000">WhatsApp +51 900 000 000</a></h3>
+        <p class="muted" style="margin-top:6px">Lunes a sábado, 9:00 a 20:00. Respondemos en menos de una hora en horario de atención.</p>
+      </div>
+
+      <div style="border-top:1px solid var(--line);padding-top:24px;margin-bottom:26px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Correo</p>
+        <h3 style="font-size:1.5rem"><a href="mailto:hola@terral.pe">hola@terral.pe</a></h3>
+        <p class="muted" style="margin-top:6px">Mayoristas y empresas: <a href="mailto:mayoristas@terral.pe" style="border-bottom:1px solid var(--line)">mayoristas@terral.pe</a></p>
+      </div>
+
+      <div style="border-top:1px solid var(--line);padding-top:24px">
+        <p style="font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-soft);margin-bottom:10px">Datos de la empresa</p>
+        <p class="muted" style="font-size:.9rem">Terral Cacao S.A.C.<br>RUC 20613456789<br>Jr. Domeyer 285, Barranco, Lima, Perú</p>
+        <a class="link-u" href="legal.html#reclamaciones" style="margin-top:18px">Libro de reclamaciones →</a>
+      </div>
+    </div>
+
+    <form class="form rv" data-d="1" data-demo>
+      <div class="field--2">
+        <div class="field"><label for="c-nom">Nombre y apellido</label><input id="c-nom" required></div>
+        <div class="field"><label for="c-tel">Teléfono / WhatsApp</label><input id="c-tel" type="tel"></div>
+      </div>
+      <div class="field"><label for="c-mail">Correo</label><input id="c-mail" type="email" required></div>
+      <div class="field">
+        <label for="c-tema">Motivo</label>
+        <select id="c-tema" class="select" style="width:100%;border-radius:2px;padding:14px 34px 14px 16px;background-color:var(--paper)">
+          <option>Consulta sobre un producto</option>
+          <option>Estado de mi pedido</option>
+          <option>Cambio o devolución</option>
+          <option>Mayoristas y empresas</option>
+          <option>Prensa o colaboraciones</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="field"><label for="c-msj">Mensaje</label><textarea id="c-msj" required></textarea></div>
+      <label style="display:flex;gap:10px;align-items:flex-start;font-size:.8rem;color:var(--text-mid)">
+        <input type="checkbox" required style="width:auto;margin-top:4px">
+        <span>Acepto la <a href="legal.html#privacidad" style="border-bottom:1px solid var(--line)">política de privacidad</a>.</span>
+      </label>
+      <button class="btn" type="submit">Enviar mensaje</button>
+      <p class="form__note">Este formulario es una demostración: no envía datos a ningún servidor.</p>
+    </form>
+  </div>
+</section>
+
+<section class="section section--tight section--dark">
+  <div class="wrap cols-3">
+    <div class="pillar rv"><span class="pillar__n">Cata en tienda</span><h3>Gratis, sin reserva</h3><p>Siempre hay tres tabletas abiertas sobre el mostrador. Puede probar antes de decidir.</p></div>
+    <div class="pillar rv" data-d="1"><span class="pillar__n">Cata guiada</span><h3>Jueves, 19:00</h3><p>Una hora, seis chocolates y café. Aforo de diez personas. S/ 60, descontables de su compra.</p></div>
+    <div class="pillar rv" data-d="2"><span class="pillar__n">Recojo en tienda</span><h3>Sin costo</h3><p>Compre en línea y recójalo el mismo día en Barranco. Elija la opción al cerrar el pedido.</p></div>
+  </div>
+</section>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/art.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

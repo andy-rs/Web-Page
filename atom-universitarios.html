@@ -1,869 +1,400 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="icon" href="favicon.png" type="image/png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atom para universitarios</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-color: #1a237e;
-            --secondary-color: #3f51b5;
-            --accent-color: #00acc1;
-            --text-dark: #212121;
-            --text-light: #757575;
-            --background-light: #f5f5f5;
-            --white: #ffffff;
-            --shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* Navegación (mismo estilo) */
-        nav {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--accent-color);
-        }
-
-        /* Menú móvil */
-        .mobile-menu {
-            display: none;
-            cursor: pointer;
-            flex-direction: column;
-            z-index: 1001;
-        }
-
-        .mobile-menu span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--primary-color);
-            margin: 3px 0;
-            transition: 0.3s;
-            border-radius: 2px;
-        }
-
-        /* Animación del menú hamburguesa */
-        .mobile-menu.active span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .mobile-menu.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-menu.active span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* Hero Section */
-        .uni-hero {
-            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
-            color: var(--white);
-            padding: 8rem 2rem 4rem;
-            text-align: center;
-            margin-top: 70px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .uni-hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 600px;
-            height: 600px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-
-        .uni-hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .uni-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .uni-hero .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            opacity: 0.9;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .uni-hero .description {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        /* Sección principal */
-        .main-section {
-            padding: 4rem 2rem;
-            background-color: var(--white);
-        }
-
-        .section-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .intro-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-            margin-bottom: 3rem;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .content-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-        }
-        
-        /* Cita destacada */
-        .highlight-quote {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto 4rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(63, 81, 181, 0.05), rgba(0, 172, 193, 0.05));
-            border-radius: 20px;
-            text-align: center;
-        }
-
-        .quote-mark {
-            position: absolute;
-            font-size: 6rem;
-            color: var(--accent-color);
-            opacity: 0.2;
-            font-family: Georgia, serif;
-            line-height: 1;
-        }
-
-        .quote-mark:first-child {
-            top: -10px;
-            left: 20px;
-        }
-
-        .quote-mark.closing {
-            bottom: -40px;
-            right: 20px;
-        }
-
-        .quote-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-            font-weight: 400;
-            position: relative;
-            z-index: 1;
-        }
-
-        .quote-text .emphasis {
-            font-size: 1.4rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: inline-block;
-            line-height: 1.6;
-        }
-
-        /* Contenido en dos columnas */
-        .two-column-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            margin-bottom: 1rem;
-            align-items: center;
-        }
-
-        .column {
-            padding: 0 1rem;
-        }
-
-        .column .content-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-dark);
-            margin: 0;
-        }
-
-        /* Elemento de marca */
-        .brand-element {
-            text-align: center;
-            padding: 3rem 0;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .brand-icon {
-            display: inline-block;
-            margin-bottom: 1.5rem;
-        }
-
-        .brand-tagline {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        /* Animación flotante */
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .highlight-quote {
-                padding: 2rem 1.5rem;
-            }
-            
-            .quote-mark {
-                font-size: 4rem;
-            }
-            
-            .quote-text {
-                font-size: 1.1rem;
-            }
-            
-            .quote-text .emphasis {
-                font-size: 1.2rem;
-            }
-            
-            .two-column-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .column {
-                padding: 0;
-            }
-            
-            .brand-element {
-                padding: 2rem 0;
-            }
-            
-            .brand-icon svg {
-                width: 60px;
-                height: 60px;
-            }
-        }
-
-        /* Sección de logros */
-        .achievements-section {
-            background-color: var(--background-light);
-            padding: 4rem 2rem;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .achievement-card {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: transform 0.3s ease;
-            border-top: 4px solid var(--accent-color);
-        }
-
-        .achievement-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-        }
-
-        .achievement-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-        }
-
-        .achievement-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-
-        .achievement-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        /* Sección Para quién es */
-        .target-section {
-            padding: 4rem 2rem;
-            background-color: var(--white);
-        }
-
-        .target-intro {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .target-list {
-            list-style: none;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-        }
-
-        .target-list li {
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            background-color: var(--background-light);
-            border-radius: 10px;
-            border-left: 4px solid var(--accent-color);
-            transition: all 0.3s ease;
-            opacity: 0.9;
-        }
-
-        .target-list li:hover {
-            transform: translateX(10px);
-            box-shadow: var(--shadow);
-            opacity: 1;
-        }
-
-        .target-list li::before {
-            content: "•";
-            color: var(--accent-color);
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-right: 1rem;
-        }
-
-        .closing-text {
-            margin-top: 3rem;
-            padding: 2rem;
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-radius: 10px;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-        
-        /* NUEVOS estilos - CTA impactante */
-        .impact-cta {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            color: var(--white);
-            box-shadow: 0 10px 30px rgba(26, 35, 126, 0.3);
-            overflow: hidden;
-        }
-
-        .impact-cta::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -30%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        .impact-cta::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -20%;
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            animation: pulse 3s ease-in-out infinite reverse;
-        }
-
-        .impact-text {
-            position: relative;
-            z-index: 1;
-        }
-
-        .impact-text .main-message {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            animation: fadeInScale 0.8s ease;
-        }
-
-        .impact-text .sub-message {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            line-height: 1.6;
-            animation: fadeInUp 0.8s ease 0.3s both;
-        }
-
-        .impact-text .highlight {
-            color: #FFD700;
-            font-weight: 600;
-        }
-
-        /* NUEVAS animaciones */
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1) rotate(0deg);
-                opacity: 0.1;
-            }
-            50% {
-                transform: scale(1.1) rotate(180deg);
-                opacity: 0.2;
-            }
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Responsive adicional */
-        @media (max-width: 768px) {
-            .impact-cta {
-                padding: 2rem 1.5rem;
-                margin: 0 1rem;
-            }
-            
-            .impact-text .main-message {
-                font-size: 1.5rem;
-            }
-            
-            .impact-text .sub-message {
-                font-size: 1rem;
-            }
-            
-            .connection-arrow::before {
-                height: 30px;
-            }
-
-            /* Estilos del menú móvil */
-            .mobile-menu {
-                display: flex;
-            }
-            
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background-color: var(--white);
-                flex-direction: column;
-                justify-content: flex-start;
-                align-items: center;
-                padding: 2rem 0;
-                box-shadow: var(--shadow);
-                transition: left 0.3s ease;
-                z-index: 999;
-            }
-            
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links li {
-                margin: 1rem 0;
-                width: 80%;
-            }
-            
-            .nav-links a {
-                font-size: 1.2rem;
-                padding: 1rem;
-                display: block;
-                width: 100%;
-                text-align: center;
-                border-radius: 8px;
-                transition: all 0.3s ease;
-            }
-            
-            .nav-links a:hover {
-                background-color: var(--background-light);
-                color: var(--primary-color);
-            }
-
-            .uni-hero h1 {
-                font-size: 2rem;
-            }
-
-            .uni-hero .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .achievements-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* CTA Final */
-        .final-cta {
-            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-            color: var(--white);
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        .final-cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .final-cta p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background-color: var(--accent-color);
-            color: var(--white);
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-        }
-
-        /* Animaciones */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atom para universitarios — Porque ingresar es solo el comienzo</title>
+<meta name="description" content="Programa de Atom para estudiantes universitarios: organiza tu ciclo, aprueba todos tus cursos y sube tu promedio sin sacrificar tu salud mental.">
+<meta name="theme-color" content="#0B1430">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="canonical" href="atom-universitarios.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Atom para universitarios">
+<meta property="og:description" content="Ingresar es solo el comienzo. Aprende a sostener el ritmo universitario con método.">
+<meta property="og:image" content="favicon.png">
+<meta property="og:locale" content="es_PE">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/atom.css">
 </head>
 <body>
-    <!-- Navegación -->
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="logo">Atom</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
-                <li><a href="atom-universitarios.html" class="active">Atom para universitarios</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <div class="mobile-menu" id="mobileMenu" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+<a class="skip-link" href="#main">Saltar al contenido</a>
+<div class="progress-bar" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="shell nav">
+    <a href="index.html" class="brand" aria-label="Atom — inicio">
+      <span class="brand__mark" aria-hidden="true">AT<br>OM</span>
+      <span class="brand__text">
+        <span class="brand__name">Atom</span>
+        <span class="brand__tag">Método de estudio</span>
+      </span>
+    </a>
+
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#metodo">El método</a></li>
+      <li><a href="programas.html">Programas</a></li>
+      <li><a href="atom-universitarios.html" aria-current="page">Universitarios</a></li>
+      <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li class="nav__cta"><a href="contacto.html" class="btn btn--block">Agenda tu diagnóstico</a></li>
+    </ul>
+
+    <div class="nav__actions">
+      <a href="contacto.html" class="btn btn--nav">
+        Agenda tu diagnóstico
+        <svg class="i-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button class="nav__toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="nav__backdrop" aria-hidden="true"></div>
+
+<main id="main">
+
+<section class="hero grain">
+  <div class="mesh" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="hero__grid">
+      <div class="hero__copy">
+        <nav class="breadcrumbs" aria-label="Ruta de navegación">
+          <a href="index.html">Inicio</a><span aria-hidden="true">/</span><span>Universitarios</span>
+        </nav>
+        <span class="pill">
+          <span class="pill__dot" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+          Programa Atom Universitarios
+        </span>
+        <h1>Porque ingresar es solo el <span class="mark">comienzo</span></h1>
+        <p class="hero__sub">
+          Acompañamiento para estudiantes que quieren sacarle el máximo provecho a su carrera
+          sin sacrificar su salud mental ni su tiempo personal.
+        </p>
+        <div class="btn-row">
+          <a href="contacto.html" class="btn btn--lg">
+            Quiero este programa
+            <svg class="i-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#para-quien" class="btn btn--ghost btn--lg">¿Es para mí?</a>
         </div>
-    </nav>
+      </div>
 
-    <!-- Hero Section -->
-    <section class="uni-hero">
-        <div class="uni-hero-content">
-            <h1>Atom para universitarios</h1>
-            <p class="subtitle">Porque ingresar es solo el comienzo</p>
-            <p class="description">
-                Acompañamiento especializado para estudiantes que buscan excelencia académica
-            </p>
-        </div>
-    </section>
-
-    <!-- Sección Principal -->
-    <section class="main-section">
-        <div class="section-container">
-            <div class="highlight-quote">
-                <span class="quote-mark">"</span>
-                <p class="quote-text">
-                    Muchos piensan que lo más difícil es ingresar a la universidad. 
-                    <span class="emphasis">En realidad, lo verdaderamente retador es mantenerse, destacar y egresar con éxito.</span>
-                </p>
-                <span class="quote-mark closing">"</span>
+      <div class="hero__visual">
+        <div class="hero-stack">
+          <div class="glass-card card-float-1">
+            <div class="glass-card__head">
+              <span class="glass-card__title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Semana 9 · Parciales</span>
+              <span class="glass-card__meta">4 cursos</span>
             </div>
-            
-            <div class="two-column-content">
-                <div class="column">
-                    <p class="content-text">
-                        En Atom, también acompañamos a estudiantes universitarios que quieren sacarle el 
-                        máximo provecho a su carrera, sin sacrificar su salud mental ni su tiempo personal.
-                    </p>
-                </div>
-                <div class="column">
-                    <p class="content-text">
-                        Te ayudamos a estudiar con estrategia, organizar tu semestre y aprobar todos los cursos que 
-                        llevas, incluso en los ciclos más exigentes.
-                    </p>
-                </div>
+            <div class="plan-row">
+              <div class="plan-item is-done">
+                <span class="plan-item__check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                <span class="plan-item__label">Cálculo · repaso espaciado</span>
+                <span class="plan-item__time">Lun</span>
+              </div>
+              <div class="plan-item is-done">
+                <span class="plan-item__check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span>
+                <span class="plan-item__label">Física · problemas tipo PC</span>
+                <span class="plan-item__time">Mar</span>
+              </div>
+              <div class="plan-item">
+                <span class="plan-item__check" aria-hidden="true"></span>
+                <span class="plan-item__label">Simulacro cronometrado</span>
+                <span class="plan-item__time">Jue</span>
+              </div>
+              <div class="plan-item">
+                <span class="plan-item__check" aria-hidden="true"></span>
+                <span class="plan-item__label">Descanso protegido</span>
+                <span class="plan-item__time">Dom</span>
+              </div>
             </div>
-        </div>
-    </section>
+          </div>
 
-    <!-- Lo que lograrás -->
-    <section class="achievements-section">
-        <div class="section-container">
-            <h2 class="section-title">Lo que lograrás</h2>
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                    </div>
-                    <h3>Planificación eficiente</h3>
-                    <p>Diseñar un plan de estudio semanal que te permita avanzar sin saturarte.</p>
-                </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 11l3 3L22 4"></path>
-                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
-                        </svg>
-                    </div>
-                    <h3>Preparación estratégica</h3>
-                    <p>Prepararte para prácticas calificadas, exámenes parciales y finales.</p>
-                </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <h3>Constancia sin burnout</h3>
-                    <p>Mantenerte constante, con enfoque, sin depender de la motivación.</p>
-                </div>
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5"></circle>
-                            <line x1="12" y1="1" x2="12" y2="3"></line>
-                            <line x1="12" y1="21" x2="12" y2="23"></line>
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                            <line x1="1" y1="12" x2="3" y2="12"></line>
-                            <line x1="21" y1="12" x2="23" y2="12"></line>
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                        </svg>
-                    </div>
-                    <h3>Equilibrio de vida</h3>
-                    <p>Gestionar tu tiempo para disfrutar de otras actividades mientras estudias.</p>
-                </div>
+          <div class="glass-card card-float-2">
+            <div class="glass-card__head">
+              <span class="glass-card__title"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Energía disponible</span>
+              <span class="glass-card__meta">Ciclo</span>
             </div>
-        </div>
-    </section>
-
-    <!-- HTML modificado para la sección -->
-    <section class="target-section">
-        <div class="section-container">
-            <h2 class="section-title">¿Para quién es?</h2>
-            <p class="target-intro">
-                Atom para universitarios está pensada para aquellos que enfrentan el desafío de comenzar una carrera universitaria, avanzar sin estancarse y terminarla con éxito.
-            </p>
-            <ul class="target-list">
-                <li>Si sientes que estudias mucho pero no obtienes los resultados que esperas…</li>
-                <li>Si postergas tus tareas, te cuesta concentrarte o sientes que te estás quedando atrás…</li>
-                <li>Si comienzas bien el ciclo pero lo terminas con agotamiento, estrés o bajas notas…</li>
-                <li>Si has desaprobado cursos y sientes que no estás estudiando "como deberías"...</li>
-                <li>Incluso si ya te va bien, pero sabes que podrías optimizar tu tiempo, mejorar tu promedio y disfrutar más el proceso…</li>
-            </ul>
-            
-            <div class="connection-arrow"></div>
-            
-            <div class="impact-cta">
-                <div class="impact-text">
-                    <p class="main-message">Entonces este programa es para ti</p>
-                    <p class="sub-message">
-                        No necesitas ser un estudiante perfecto. Solo necesitas estar dispuesto a 
-                        <span class="highlight">mejorar tus métodos</span>, tomar el control de tu estudio y 
-                        aprender a estudiar con <span class="highlight">estrategia y equilibrio</span>.
-                    </p>
-                </div>
+            <div class="chart" aria-hidden="true">
+              <span class="chart__bar chart__bar--gold" style="--h:78%; --i:0"></span>
+              <span class="chart__bar chart__bar--gold" style="--h:84%; --i:1"></span>
+              <span class="chart__bar chart__bar--gold" style="--h:72%; --i:2"></span>
+              <span class="chart__bar chart__bar--gold" style="--h:88%; --i:3"></span>
+              <span class="chart__bar" style="--h:36%; --i:4"></span>
+              <span class="chart__bar" style="--h:28%; --i:5"></span>
+              <span class="chart__bar" style="--h:22%; --i:6"></span>
+              <span class="chart__bar" style="--h:16%; --i:7"></span>
             </div>
+            <div class="chart__legend">
+              <span><i style="background:#D8B44A"></i>Con plan</span>
+              <span><i style="background:#5D7BA6"></i>Sin plan</span>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- CTA Final -->
-    <section class="final-cta">
-        <h2>¿Listo para transformar tu experiencia universitaria?</h2>
-        <p>Comienza hoy mismo a estudiar con estrategia</p>
-        <a href="contacto.html" class="btn">Únete ahora</a>
-    </section>
+<section class="section section--white">
+  <div class="shell shell--narrow">
+    <div class="quote-block" data-reveal="zoom" style="padding:clamp(2rem,1.5rem+2vw,3rem) clamp(1.8rem,1.2rem+2vw,3rem) clamp(2rem,1.5rem+2vw,3rem) clamp(3.4rem,2.5rem+3vw,5rem)">
+      <p style="font-size:clamp(1.15rem,1rem+.9vw,1.6rem); line-height:1.45">
+        Muchos piensan que lo más difícil es ingresar a la universidad.
+        <span class="text-gold">En realidad, lo verdaderamente retador es mantenerse, destacar y egresar con éxito.</span>
+      </p>
+      <cite>El método Atom</cite>
+    </div>
 
-    <script>
-        // Función simple para el menú móvil
-        function toggleMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const navLinks = document.getElementById('navLinks');
-            
-            mobileMenu.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        }
+    <div class="grid grid--2 mt-8" data-reveal-group>
+      <div data-reveal>
+        <div class="divider-gold" style="margin-bottom:1.2rem"></div>
+        <p class="lead">
+          En Atom también acompañamos a estudiantes universitarios que quieren sacarle el máximo provecho
+          a su carrera, sin sacrificar su salud mental ni su tiempo personal.
+        </p>
+      </div>
+      <div data-reveal>
+        <div class="divider-gold" style="margin-bottom:1.2rem"></div>
+        <p class="lead">
+          Te ayudamos a estudiar con estrategia, organizar tu semestre y aprobar todos los cursos que
+          llevas, incluso en los ciclos más exigentes.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        // Cerrar menú al hacer click en los enlaces
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function() {
-                const mobileMenu = document.getElementById('mobileMenu');
-                const navLinks = document.getElementById('navLinks');
-                
-                mobileMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
+<section class="section section--ivory">
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="shell">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Lo que lograrás</span>
+      <h2>Cuatro cambios que se notan desde el primer mes</h2>
+    </div>
 
-        // Cerrar menú al hacer click fuera del menú
-        document.addEventListener('click', function(e) {
-            const mobileMenu = document.getElementById('mobileMenu');
-            const navLinks = document.getElementById('navLinks');
-            const navContainer = document.querySelector('.nav-container');
-            
-            if (!navContainer.contains(e.target)) {
-                mobileMenu.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
+    <div class="grid grid--4" data-reveal-group>
+      <article class="card" data-reveal>
+        <span class="card__num" aria-hidden="true">01</span>
+        <div class="card__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h3>Planificación eficiente</h3>
+        <p>Diseñar un plan de estudio semanal que te permita avanzar sin saturarte, con espacio real para descansar.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="card__num" aria-hidden="true">02</span>
+        <div class="card__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h3>Preparación estratégica</h3>
+        <p>Prepararte para prácticas calificadas, exámenes parciales y finales con un sistema, no con improvisación.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="card__num" aria-hidden="true">03</span>
+        <div class="card__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <h3>Constancia sin burnout</h3>
+        <p>Mantenerte constante y con enfoque, sin depender de la motivación ni de las noches en vela.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="card__num" aria-hidden="true">04</span>
+        <div class="card__icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+        <h3>Equilibrio de vida</h3>
+        <p>Gestionar tu tiempo para disfrutar de otras actividades mientras estudias, sin culpa de por medio.</p>
+      </article>
+    </div>
+  </div>
+</section>
 
-        // Smooth scrolling para los enlaces
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+<section class="section section--navy grain" id="para-quien">
+  <div class="mesh" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="shell">
+    <div class="grid grid--2" style="align-items:start; gap:clamp(2rem,1.2rem+3vw,4rem)">
+      <div data-reveal="left">
+        <span class="eyebrow">¿Para quién es?</span>
+        <h2 style="font-size:var(--fs-h2); margin:1rem 0 1.2rem">Reconócete en alguna de estas frases</h2>
+        <p class="lead" style="color:rgba(226,233,250,.75)">
+          Atom para Universitarios está pensado para quienes enfrentan el desafío de comenzar una carrera,
+          avanzar sin estancarse y terminarla con éxito.
+        </p>
 
-        // Animación de aparición al hacer scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+        <div class="card card--dark" style="margin-top:2rem">
+          <h3 style="font-size:1.3rem; margin-bottom:.7rem">Entonces este programa es para ti</h3>
+          <p>
+            No necesitas ser un estudiante perfecto. Solo necesitas estar dispuesto a
+            <strong class="text-gold">mejorar tus métodos</strong>, tomar el control de tu estudio y
+            aprender a estudiar con <strong class="text-gold">estrategia y equilibrio</strong>.
+          </p>
+          <div class="btn-row" style="margin-top:1.6rem">
+            <a href="contacto.html" class="btn">
+              Empezar ahora
+              <svg class="i-arrow" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
 
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
+      <ul class="checklist" data-reveal="right" data-reveal-group style="gap:1.1rem">
+        <li data-reveal><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Si sientes que estudias mucho pero no obtienes los resultados que esperas.</span></li>
+        <li data-reveal><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Si postergas tus tareas, te cuesta concentrarte o sientes que te estás quedando atrás.</span></li>
+        <li data-reveal><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Si comienzas bien el ciclo pero lo terminas con agotamiento, estrés o bajas notas.</span></li>
+        <li data-reveal><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Si has desaprobado cursos y sientes que no estás estudiando «como deberías».</span></li>
+        <li data-reveal><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Incluso si ya te va bien, pero sabes que podrías optimizar tu tiempo, mejorar tu promedio y disfrutar más el proceso.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-        // Observar elementos
-        document.querySelectorAll('.achievement-card, .impact-cta').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
+<section class="section section--white">
+  <div class="shell">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Cómo se trabaja</span>
+      <h2>El ciclo, dividido en cuatro fases</h2>
+      <p>Cada fase tiene un objetivo distinto. El plan se ajusta a tu carga real de cursos.</p>
+    </div>
+
+    <div class="steps" data-reveal-group>
+      <article class="step" data-reveal>
+        <div class="step__dot">1</div>
+        <div><h3>Mapa del ciclo</h3><p>Revisamos tus cursos, sílabos y fechas clave para anticipar las semanas críticas antes de que lleguen.</p></div>
+      </article>
+      <article class="step" data-reveal>
+        <div class="step__dot">2</div>
+        <div><h3>Rutina base</h3><p>Construimos una semana tipo con bloques de estudio, clases, descanso y vida personal protegida.</p></div>
+      </article>
+      <article class="step" data-reveal>
+        <div class="step__dot">3</div>
+        <div><h3>Modo evaluación</h3><p>Protocolos específicos para prácticas calificadas, parciales y finales: qué repasar, cuándo y cómo.</p></div>
+      </article>
+      <article class="step" data-reveal>
+        <div class="step__dot">4</div>
+        <div><h3>Cierre y traspaso</h3><p>Al final del ciclo te quedas con el sistema documentado para repetirlo solo, sin depender de nadie.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section--sand">
+  <div class="shell shell--narrow">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h2>Antes de empezar</h2>
+    </div>
+
+    <div class="faq" data-reveal-group>
+      <div class="faq__item" data-reveal>
+        <button class="faq__q" type="button" aria-expanded="false">
+          ¿Sirve si mi carrera no es de ingeniería?
+          <span class="faq__icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__a"><div><p>Sí. Las técnicas de planificación, memoria y concentración son transversales: cambian los contenidos, no los principios del aprendizaje. Adaptamos el plan a la naturaleza de tus cursos, sean de cálculo, de lectura densa o de práctica clínica.</p></div></div>
+      </div>
+      <div class="faq__item" data-reveal>
+        <button class="faq__q" type="button" aria-expanded="false">
+          Estoy en semanas de parciales. ¿Puedo entrar ahora?
+          <span class="faq__icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__a"><div><p>Puedes, aunque el trabajo cambia: en plena evaluación priorizamos el rescate del ciclo actual y dejamos la reconstrucción de hábitos para después. Lo conversamos en el diagnóstico.</p></div></div>
+      </div>
+      <div class="faq__item" data-reveal>
+        <button class="faq__q" type="button" aria-expanded="false">
+          ¿Me van a enseñar el contenido de mis cursos?
+          <span class="faq__icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__a"><div><p>No somos una academia de contenidos: enseñamos el método. Ahora bien, todo el entrenamiento se hace sobre tus propios materiales, así que trabajarás directamente con los temas que necesitas dominar.</p></div></div>
+      </div>
+      <div class="faq__item" data-reveal>
+        <button class="faq__q" type="button" aria-expanded="false">
+          ¿Cuánto tiempo semanal exige el programa?
+          <span class="faq__icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__a"><div><p>El objetivo es que estudies <em>menos</em> horas y mejor. La sesión de acompañamiento es breve; lo demás es reorganizar el tiempo que ya inviertes para que rinda más.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section section--ivory">
+  <div class="shell">
+    <div class="cta-panel grain" data-reveal="zoom">
+      <div class="cta-panel__glow" aria-hidden="true"></div>
+      <h2>¿Listo para transformar tu experiencia universitaria?</h2>
+      <p>Comienza hoy mismo a estudiar con estrategia. Empezamos con una conversación de diagnóstico.</p>
+      <div class="btn-row">
+        <a href="contacto.html" class="btn btn--lg">
+          Agenda tu diagnóstico
+          <svg class="i-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="https://wa.me/51967730464?text=Hola%2C%20me%20interesa%20Atom%20para%20universitarios" target="_blank" rel="noopener" class="btn btn--ghost btn--lg">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <div class="site-footer__top">
+      <div>
+        <a href="index.html" class="brand" aria-label="Atom — inicio">
+      <span class="brand__mark" aria-hidden="true">AT<br>OM</span>
+      <span class="brand__text">
+        <span class="brand__name">Atom</span>
+        <span class="brand__tag">Método de estudio</span>
+      </span>
+    </a>
+        <p class="footer__about">Academia peruana de técnicas de estudio y formación de hábitos para postulantes y estudiantes universitarios.</p>
+        <div class="footer__socials">
+          <a href="https://wa.me/51967730464" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.03 1.02-1.03 2.48 0 1.46 1.06 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.28-.2-.58-.34M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26C2.16 6.46 6.6 2.02 12.05 2.02c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.49-8.4"/></svg></a>
+          <a href="mailto:andysmithrsll@gmail.com" aria-label="Correo electrónico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#metodo">El método</a></li>
+          <li><a href="programas.html">Programas</a></li>
+          <li><a href="atom-universitarios.html">Universitarios</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Atom</h4>
+        <ul>
+          <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
+          <li><a href="sobre-nosotros.html#fundador">El fundador</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:andysmithrsll@gmail.com">andysmithrsll@gmail.com</a></li>
+          <li><a href="https://wa.me/51967730464" target="_blank" rel="noopener">+51 967 730 464</a></li>
+          <li><span>Lun. a sáb. · 9:00 – 18:00</span></li>
+          <li><span>Online · Lima, Perú</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>&copy; <span data-year>2026</span> Atom. Todos los derechos reservados.</span>
+      <span>Estudia con estrategia, ingresa con ventaja.</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa-fab" href="https://wa.me/51967730464?text=Hola%2C%20me%20interesa%20Atom%20para%20universitarios" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.03 1.02-1.03 2.48 0 1.46 1.06 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.08-.12-.28-.2-.58-.34M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26C2.16 6.46 6.6 2.02 12.05 2.02c2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.43 9.89-9.88 9.89m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.49-8.4"/></svg>
+  <span>WhatsApp</span>
+</a>
+
+<script src="assets/js/atom.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros - Atom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #3f51b5;
+            --accent-color: #00acc1;
+            --text-dark: #212121;
+            --text-light: #757575;
+            --background-light: #f5f5f5;
+            --white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navegación (mismo estilo que la página principal) */
+        nav {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* Menú móvil */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            z-index: 1001;
+        }
+
+        .mobile-menu span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Animación del menú hamburguesa */
+        .mobile-menu.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Hero Section - Sobre Nosotros */
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 6rem 2rem 3rem;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .about-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Sección ¿Qué es Atom? */
+        .what-is-Atom {
+            padding: 4rem 2rem;
+            background-color: var(--white);
+        }
+
+        .section-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+        .section-content-2 {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* Sección ¿Qué hacemos? */
+        .what-we-do {
+            padding: 4rem 2rem;
+            background-color: var(--background-light);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .features-list li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .features-list li:hover {
+            transform: translateX(10px);
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        /* Logos de universidades */
+        .universities-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo-container {
+            flex: 1;
+            max-width: 150px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.15);
+        }
+
+        .uni-logo {
+            width: 100%;
+            height: auto;
+            max-height: 80px;
+            object-fit: contain;
+            transition: all 0.3s ease;
+        }
+
+        .uni-logo:hover {
+            transform: translateY(-5px);
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+
+        /* Sección Fundador */
+        .founder-section {
+            padding: 4rem 2rem;
+            background-color: var(--white);
+        }
+
+        .founder-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .founder-image-container {
+            text-align: center;
+        }
+
+        .founder-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 5px solid var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .founder-image:hover {
+            transform: scale(1.05);
+        }
+
+        .founder-info h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .founder-credentials {
+            background-color: var(--background-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .founder-credentials p {
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+        }
+
+        .founder-credentials strong {
+            color: var(--primary-color);
+        }
+
+        /* Sección Por qué confiar */
+        .why-trust {
+            padding: 4rem 2rem;
+            background-color: var(--background-light);
+        }
+
+        .trust-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .trust-card {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .trust-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .trust-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--accent-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: flex;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--white);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 2rem 0;
+                box-shadow: var(--shadow);
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+                width: 80%;
+            }
+            
+            .nav-links a {
+                font-size: 1.2rem;
+                padding: 1rem;
+                display: block;
+                width: 100%;
+                text-align: center;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+            
+            .nav-links a:hover {
+                background-color: var(--background-light);
+                color: var(--primary-color);
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .founder-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .founder-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            /* Logos de universidades responsive */
+            .universities-logos {
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+            
+            .logo-container {
+                max-width: 100px;
+                flex: 0 0 40%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .universities-logos {
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            .logo-container {
+                max-width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">Atom</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="sobre-nosotros.html" class="active">Sobre nosotros</a></li>
+                <li><a href="atom-universitarios.html">Atom para universitarios</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="mobile-menu" id="mobileMenu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <h1>Sobre Nosotros</h1>
+    </section>
+
+    <!-- ¿Qué es Atom? -->
+    <section class="what-is-Atom">
+        <div class="section-container">
+            <h2 class="section-title">¿Qué es Atom?</h2>
+            <p class="section-content-2">
+                Atom es una academia especializada en enseñar técnicas de estudio y formación de 
+                hábitos para postulantes universitarios que aspiran a lograr el ingreso a la universidad de sus sueños.
+            </p>
+            <p class="section-content-2">
+                En un entorno donde muchos confunden esfuerzo con efectividad, en Atom creemos 
+                que el verdadero éxito viene de estudiar con inteligencia. Por eso enseñamos métodos 
+                comprobados, adaptados a las exigencias de los exámenes de ingreso más competitivos 
+                de nuestro país.
+            </p>
+        </div>
+    </section>
+
+    <!-- ¿Qué hacemos? -->
+    <section class="what-we-do">
+        <div class="section-container">
+            <h2 class="section-title">¿Qué hacemos?</h2>
+            <p class="section-content">
+                Nuestro programa está diseñado para transformar tu forma de estudiar y convertirte en 
+                una persona que:
+            </p>
+            <ul class="features-list">
+                <li>Organiza su tiempo con enfoque en resultados.</li>
+                <li>Mantiene la motivación y la energía a lo largo de su preparación.</li>
+                <li>Estudia con intención, no por inercia.</li>
+            </ul>
+            <p class="section-content">
+                Nos enfocamos en postulantes a universidades como la UNI, San Marcos, PUCP, 
+                Cayetano Heredia y otras, donde se sabe que ingresar no solo requiere tener conocimiento, sino estrategia y, lo mas importante,
+                <strong>disciplina</strong>. 
+            </p>
+            
+            <!-- Logos de universidades -->
+            <div class="universities-logos">
+                <div class="logo-container">
+                    <img src="Images/logo-uni.png" alt="Universidad Nacional de Ingeniería" class="uni-logo">
+                </div>
+                <div class="logo-container">
+                    <img src="Images/logo-san-marcos.png" alt="Universidad Nacional Mayor de San Marcos" class="uni-logo">
+                </div>
+                <div class="logo-container">
+                    <img src="Images/logo-pucp.jpg" alt="Pontificia Universidad Católica del Perú" class="uni-logo">
+                </div>
+                <div class="logo-container">
+                    <img src="Images/logo-cayetano.jpg" alt="Universidad Peruana Cayetano Heredia" class="uni-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Fundador -->
+    <section class="founder-section">
+        <div class="founder-container">
+            <div class="founder-image-container">
+                <!-- Aquí puedes cambiar la imagen -->
+                <img src="Images/andy-smith.jpg" 
+                     alt="Andy Smith Reyna Santillan" 
+                     class="founder-image">
+                <p style="margin-top: 1rem; color: var(--text-light);">
+                    Fundador e instructor principal de Atom
+                </p>
+            </div>
+            <div class="founder-info">
+                <h3>¿Quién está detrás de Atom?</h3>
+                <p class="section-content">
+                    Mi nombre es Andy Smith Reyna Santillan, fundador e instructor principal de Atom.
+                </p>
+                <div class="founder-credentials">
+                    <p><strong>✓ Primer puesto</strong> en el ingreso a Ingeniería de Telecomunicaciones - UNI</p>
+                    <p><strong>✓ Nota superior a 16</strong> en este exigente examen de admisión</p>
+                    <p><strong>✓ Primer puesto de mi carrera durante 6 ciclos consecutivos</strong>, con promedio ponderado máximo de 17.44</p>
+                </div>
+                <p class="section-content">
+                    No conseguí dichos logros por estudiar hasta el agotamiento, sino por estudiar con estructura 
+                    y estrategia. <strong>Y eso es justamente lo que enseño.</strong>
+                </p>
+                <p class="section-content">
+                    Gracias a mis métodos he conseguido tanto destacar académicamente como tener tiempo 
+                    para mis pasatiempos: practico calistenia y leo con regularidad. Por ello, considero que estudiar bien no se trata 
+                    de renunciar a todo, sino de hacerlo inteligentemente.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Por qué confiar -->
+    <section class="why-trust">
+        <div class="section-container">
+            <h2 class="section-title">¿Por qué confiar en Atom?</h2>
+            <div class="trust-points">
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                    </div>
+                    <h3>Experiencia real</h3>
+                    <p>Los métodos que enseñamos han demostrado ser altamente efectivos</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"></path>
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path>
+                        </svg>
+                    </div>
+                    <h3>Métodos probados</h3>
+                    <p>Enseñamos lo que realmente funciona.</p>
+                </div>
+                <div class="trust-card">
+                    <div class="trust-icon">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                        </svg>
+                    </div>
+                    <h3>Enfoque integral</h3>
+                    <p>Creemos que ingresar no tiene por qué costarte tu salud, tu tiempo o tu motivación.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>¿Listo para comenzar a estudiar con estrategia?</h2>
+        <a href="contacto.html" class="btn">Comienza ahora</a>
+    </section>
+
+    <script>
+        // Función simple para el menú móvil
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navLinks = document.getElementById('navLinks');
+            
+            mobileMenu.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        }
+
+        // Cerrar menú al hacer click en los enlaces
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                const mobileMenu = document.getElementById('mobileMenu');
+                const navLinks = document.getElementById('navLinks');
+                
+                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Cerrar menú al hacer click fuera del menú
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navLinks = document.getElementById('navLinks');
+            const navContainer = document.querySelector('.nav-container');
+            
+            if (!navContainer.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling para los enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de aparición al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos
+        document.querySelectorAll('.trust-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
