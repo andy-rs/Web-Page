@@ -1,0 +1,8 @@
+# robots.txt — atom-academy.com
+User-agent: *
+Allow: /
+
+# Sin rutas privadas que ocultar: el sitio es 100 % público.
+# Si en el futuro agregas borradores, bloquéalos aquí con Disallow: /ruta/
+
+Sitemap: https://atom-academy.com/sitemap.xml

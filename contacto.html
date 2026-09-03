@@ -7,18 +7,51 @@
 <meta name="description" content="Escríbenos por WhatsApp o correo y agenda tu conversación de diagnóstico con Atom. Atención de lunes a sábado, de 16:30 a 20:00.">
 <meta name="theme-color" content="#0B1430">
 <link rel="icon" href="favicon.png" type="image/png">
-<link rel="canonical" href="contacto.html">
+<link rel="canonical" href="https://atom-academy.com/contacto.html">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="Atom Academy">
+<link rel="apple-touch-icon" href="https://atom-academy.com/favicon.png">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contacto — Atom">
 <meta property="og:description" content="¿Tienes preguntas? ¿Quieres saber si Atom es para ti? Hablemos.">
-<meta property="og:image" content="favicon.png">
+<meta property="og:url" content="https://atom-academy.com/contacto.html">
+<meta property="og:site_name" content="Atom Academy">
+<meta property="og:image" content="https://atom-academy.com/assets/og-atom.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Atom Academy — Estudia con estrategia, ingresa con ventaja">
 <meta property="og:locale" content="es_PE">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contacto — Atom">
+<meta name="twitter:description" content="¿Tienes preguntas? ¿Quieres saber si Atom es para ti? Hablemos.">
+<meta name="twitter:image" content="https://atom-academy.com/assets/og-atom.jpg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/atom.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://atom-academy.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Contacto", "item": "https://atom-academy.com/contacto.html" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contacto \u2014 Atom",
+  "url": "https://atom-academy.com/contacto.html",
+  "inLanguage": "es-PE",
+  "about": { "@id": "https://atom-academy.com/#organizacion" }
+}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Saltar al contenido</a>
@@ -26,7 +59,7 @@
 
 <header class="site-header">
   <div class="shell nav">
-    <a href="index.html" class="brand" aria-label="Atom — inicio">
+    <a href="index.html" class="brand">
       <span class="brand__mark" aria-hidden="true">AT<br>OM</span>
       <span class="brand__text">
         <span class="brand__name">Atom</span>
@@ -93,7 +126,10 @@
           Completa los campos y elige cómo prefieres enviarlo.
         </p>
 
-        <form id="contact-form" data-whatsapp="51967730464" data-email="atom.academy.contact@gmail.com" novalidate>
+        <!-- data-lead-endpoint: pega aquí tu URL de Formspree (https://formspree.io/f/XXXXXXXX)
+             para que cada envío quede guardado aunque la persona no complete
+             el mensaje en WhatsApp. Vacío = desactivado, el formulario funciona igual. -->
+        <form id="contact-form" data-whatsapp="51967730464" data-email="atom.academy.contact@gmail.com" data-lead-endpoint="" novalidate>
           <div class="field-row">
             <div class="field">
               <label for="nombre">Nombre y apellido</label>
@@ -265,7 +301,7 @@
   <div class="shell">
     <div class="site-footer__top">
       <div>
-        <a href="index.html" class="brand" aria-label="Atom — inicio">
+        <a href="index.html" class="brand">
       <span class="brand__mark" aria-hidden="true">AT<br>OM</span>
       <span class="brand__text">
         <span class="brand__name">Atom</span>
@@ -280,7 +316,7 @@
       </div>
 
       <div>
-        <h4>Navegación</h4>
+        <h3>Navegación</h3>
         <ul>
           <li><a href="index.html">Inicio</a></li>
           <li><a href="index.html#metodo">El método</a></li>
@@ -290,7 +326,7 @@
       </div>
 
       <div>
-        <h4>Atom</h4>
+        <h3>Atom</h3>
         <ul>
           <li><a href="sobre-nosotros.html">Sobre nosotros</a></li>
           <li><a href="sobre-nosotros.html#fundador">El fundador</a></li>
@@ -299,7 +335,7 @@
       </div>
 
       <div>
-        <h4>Contacto</h4>
+        <h3>Contacto</h3>
         <ul>
           <li><a href="mailto:atom.academy.contact@gmail.com">atom.academy.contact@gmail.com</a></li>
           <li><a href="https://wa.me/51967730464" target="_blank" rel="noopener">+51 967 730 464</a></li>
@@ -317,5 +353,6 @@
 </footer>
 
 <script src="assets/js/atom.js" defer></script>
+<script src="assets/js/analytics.js" defer></script>
 </body>
 </html>

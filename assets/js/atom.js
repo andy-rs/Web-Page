@@ -234,12 +234,39 @@
       status.style.color = kind === 'error' ? '#B4232A' : 'var(--gold-700)';
     }
 
+    /* Registra el lead antes de redirigir. Si la persona no llega a pulsar
+       "enviar" dentro de WhatsApp, el contacto igual queda guardado.
+       El endpoint se configura en data-lead-endpoint del formulario;
+       vacío = desactivado y el formulario se comporta como siempre. */
+    function saveLead(data, via) {
+      var endpoint = form.getAttribute('data-lead-endpoint');
+      if (!endpoint || !window.fetch) return;
+      try {
+        fetch(endpoint, {
+          method: 'POST',
+          keepalive: true,   /* sobrevive a la navegación a WhatsApp/correo */
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            nombre: data.nombre,
+            correo: data.correo,
+            perfil: data.perfil,
+            objetivo: data.objetivo || '(no indicado)',
+            mensaje: data.mensaje || '(sin mensaje adicional)',
+            via: via,
+            pagina: location.href,
+            enviado: new Date().toISOString()
+          })
+        })['catch'](function () { /* nunca bloquea el flujo del usuario */ });
+      } catch (e) {}
+    }
+
     on(form, 'submit', function (e) {
       e.preventDefault();
       var data = collect();
       var error = validate(data);
       if (error) { say(error, 'error'); return; }
 
+      saveLead(data, 'whatsapp');
       var wa = form.getAttribute('data-whatsapp');
       var url = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(buildMessage(data));
       say('Abriendo WhatsApp con tu mensaje listo para enviar…', 'ok');
@@ -251,6 +278,7 @@
       var data = collect();
       var error = validate(data);
       if (error) { say(error, 'error'); return; }
+      saveLead(data, 'correo');
       var to = form.getAttribute('data-email');
       var subject = 'Consulta desde la web — ' + data.nombre;
       say('Abriendo tu cliente de correo…', 'ok');
