@@ -18,8 +18,8 @@
 (function () {
   'use strict';
 
-  var GA4_ID     = '';   // <-- pega aquí "G-XXXXXXXXXX"
-  var CLARITY_ID = '';   // <-- pega aquí tu ID de Clarity
+  var GA4_ID     = 'G-K9XE9TWLQ3';
+  var CLARITY_ID = 'ycavphsjrl';
 
   /* ---------------------------------------------------------------- GA4 --- */
   window.dataLayer = window.dataLayer || [];
